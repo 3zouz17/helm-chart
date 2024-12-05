@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  namespace: default
+spec:
+  replicas: 2  # Number of pods to run
+  selector:
+    matchLabels:
+      app: my-app  # Label for identifying the pods
+  template:
+    metadata:
+      labels:
+        app: my-app  # Label for identifying the pods
+    spec:
+      containers:
+        - name: my-app
+          image: aljasmi17/my-app:v1  # Docker image in your Docker Hub repository
+          ports:
+            - containerPort: 8080  # Port the app will run on
+          env:
+            - name: ENV_VAR_NAME  # Optional: Add any environment variables if needed
+              value: "value"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+  namespace: default
+spec:
+  selector:
+    app: my-app  # Service will route traffic to pods with this label
+  ports:
+    - protocol: TCP
+      port: 80  # Port exposed by the service
+      targetPort: 8080  # Port the container is using
+  type: ClusterIP  # Change to LoadBalancer or NodePort if needed
