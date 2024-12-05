@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+  namespace: default
+spec:
+  selector:
+    app: my-app  # This selects the pods that belong to your application based on the label 'app: my-app'
+  ports:
+    - protocol: TCP
+      port: 80  # Port that the Service exposes inside the cluster
+      targetPort: 8080  # Port that the container is listening to
+  type: ClusterIP  # You can change this to NodePort or LoadBalancer if you want to expose the app externally
