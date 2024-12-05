@@ -1,6 +1,7 @@
-replicas: 3
+replicas: 2
 image:
-  repository: my-app
+  repository: nginx
   tag: latest
 service:
-  port: 8080
+  type: ClusterIP
+  port: 80
